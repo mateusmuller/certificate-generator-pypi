@@ -31,13 +31,13 @@ class TestCertificateGenerator():
         image.save(file, 'png')
         file.name = 'certificate.png'
         file.seek(0)
-        yield file
+        with open('certificate.png', 'wb') as f:
+            f.write(file.getbuffer())
+        yield
+        os.remove('certificate.png')
 
-    def test_certificate_generate(self, client, certificate_image):
+    def test_certificate_generate(self, certificate_image, client):
         filename = client.generate_certificate("NAme HeRE Test")
         assert filename == "name_here_test.png"
         assert os.path.exists(filename)
         os.remove(filename)
-
-    def test_send_email(self, client):
-        pass
