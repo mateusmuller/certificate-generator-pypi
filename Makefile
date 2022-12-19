@@ -5,4 +5,4 @@ run:
 
 test:
 	@pytest
-	@flake8 . --exclude venv
+	@flake8 . --exclude venv,main.py
