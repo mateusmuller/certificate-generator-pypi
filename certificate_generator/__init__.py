@@ -30,5 +30,8 @@ class CertificateGenerator():
         certificate = Image.open(self.certificate)
         certificate_draw = ImageDraw.Draw(certificate)
         font = ImageFont.truetype("DejaVuSans.ttf", 200, encoding="unic")
-        certificate_draw.text((640, 1000), student_name, font=font, fill=(0, 0, 0))
+        certificate_draw.text((640, 1000),
+                              student_name,
+                              font=font,
+                              fill=(0, 0, 0))
         certificate.save(file_name, "PNG", resolution=100.0)
