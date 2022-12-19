@@ -7,7 +7,10 @@ from PIL import ImageDraw
 
 class CertificateGenerator():
 
-    def __init__(self, subject, body, spreadsheet, certificate):
+    def __init__(
+            self, subject, body, spreadsheet, certificate,
+            x, y, font
+    ):
         try:
             self.email = os.environ["SMTP_EMAIL"]
             self.password = os.environ["SMTP_PASSWORD"]
@@ -17,6 +20,9 @@ class CertificateGenerator():
             self.email_body = body
             self.spreadsheet = spreadsheet
             self.certificate = certificate
+            self.x = x
+            self.y = y
+            self.font = font
         except TypeError as e:
             print(e)
             sys.exit(1)
@@ -29,8 +35,8 @@ class CertificateGenerator():
 
         certificate = Image.open(self.certificate)
         certificate_draw = ImageDraw.Draw(certificate)
-        font = ImageFont.truetype("DejaVuSans.ttf", 200, encoding="unic")
-        certificate_draw.text((640, 1000),
+        font = ImageFont.truetype(self.font, 200)
+        certificate_draw.text((self.x, self.y),
                               student_name,
                               font=font,
                               fill=(0, 0, 0))
