@@ -11,12 +11,8 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 
-class CertificateGenerator():
-
-    def __init__(
-            self, subject, spreadsheet, certificate,
-            x, y, font, font_size
-    ):
+class CertificateGenerator:
+    def __init__(self, subject, spreadsheet, certificate, x, y, font, font_size):
         try:
             self.email = os.environ["SMTP_EMAIL"]
             self.password = os.environ["SMTP_PASSWORD"]
@@ -33,7 +29,7 @@ class CertificateGenerator():
             print(e)
             sys.exit(1)
         except KeyError as e:
-            print(f'The environment variable {e} is missing.')
+            print(f"The environment variable {e} is missing.")
             sys.exit(1)
 
     def generate_certificate(self, student_name):
@@ -43,14 +39,13 @@ class CertificateGenerator():
             certificate = Image.open(self.certificate)
             certificate_draw = ImageDraw.Draw(certificate)
             font = ImageFont.truetype(self.font, self.font_size)
-            certificate_draw.text((self.x, self.y),
-                                  student_name,
-                                  font=font,
-                                  fill=(0, 0, 0))
+            certificate_draw.text(
+                (self.x, self.y), student_name, font=font, fill=(0, 0, 0)
+            )
             certificate.save(file_name, "PNG", resolution=100.0)
             return file_name
         except FileNotFoundError as e:
-            print(f'The location of the file is wrong or not exist: {e}')
+            print(f"The location of the file is wrong or not exist: {e}")
             sys.exit(1)
 
     def smtp_connection(self) -> smtplib.SMTP:
@@ -61,22 +56,20 @@ class CertificateGenerator():
             smtp_connection.login(self.email, self.password)
             return smtp_connection
         except smtplib.SMTPAuthenticationError as e:
-            print(f'Username or password are wrong, check exception: {e}')
+            print(f"Username or password are wrong, check exception: {e}")
             sys.exit(1)
 
     def send_email(self, email, smtp_connection, certificate):
         msg = MIMEMultipart()
-        msg['From'] = self.email
-        msg['To'] = email
-        msg['Subject'] = self.email_subject
+        msg["From"] = self.email
+        msg["To"] = email
+        msg["Subject"] = self.email_subject
         body = "Segue em anexo seu certificado de conclusão."
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body, "plain"))
         attachment = open(certificate, "rb")
-        part = MIMEBase('image', 'png')
+        part = MIMEBase("image", "png")
         part.set_payload(attachment.read())
-        part.add_header('Content-Disposition',
-                        'attachment',
-                        filename=certificate)
+        part.add_header("Content-Disposition", "attachment", filename=certificate)
         encoders.encode_base64(part)
         msg.attach(part)
         email_body = msg.as_string()
@@ -84,9 +77,9 @@ class CertificateGenerator():
 
     def read_spreadsheet(self):
         try:
-            with open(self.spreadsheet, 'r') as spreadsheet:
+            with open(self.spreadsheet, "r") as spreadsheet:
 
-                csv_reader = csv.reader(spreadsheet, delimiter=',')
+                csv_reader = csv.reader(spreadsheet, delimiter=",")
                 line_count = 0
                 smtp_connection = self.smtp_connection()
 
@@ -102,7 +95,7 @@ class CertificateGenerator():
                     line_count += 1
 
         except FileNotFoundError as e:
-            print(f'The location of the file is wrong or not exist: {e}')
+            print(f"The location of the file is wrong or not exist: {e}")
             sys.exit(1)
 
     def run(self):
