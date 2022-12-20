@@ -13,5 +13,6 @@ run:
 	@python main.py
 
 test:
+	@black .
 	@pytest
 	@flake8 . --exclude venv,main.py
