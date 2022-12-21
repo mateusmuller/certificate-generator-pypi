@@ -1,4 +1,4 @@
-import certgenerator
+import ccgenerator
 import pytest
 import os
 from io import BytesIO
@@ -13,7 +13,7 @@ class TestCertificateGenerator:
         os.environ["SMTP_SERVER"] = ""
         os.environ["SMTP_PORT"] = ""
 
-        yield certgenerator.CertificateGenerator(
+        yield ccgenerator.CertificateGenerator(
             "[WORKSHOP FEEVALE] - Certificado de Conclusão",
             "participantes.csv",
             "certificate.png",
