@@ -1,16 +1,11 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: Python application
+name: CI/CD for Python package
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches:
+      - 'main'
+    tags:
+      - 'v[12].[0-9]+.[0-9]+'
 
 jobs:
   test:
@@ -30,8 +25,33 @@ jobs:
       run: |
         make test
 
-  deploy:
+  build:
+    if: startsWith(github.event.ref, 'refs/tags/v')
     needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Build Python package
+        run: |
+          sed -i 's/0.0.0/${GITHUB_REF_NAME}/g' setup.py
+          make build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+
+  deploy:
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +64,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Download build directory
+      uses: actions/download-artifact@v3
+      with:
+        name: build
     - name: Build and push
       env:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
