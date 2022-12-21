@@ -7,7 +7,7 @@ check:
 	@twine check dist/*
 
 push: check
-	@twine upload -r testpypi dist/* --verbose --skip-existing
+	@twine upload dist/* --verbose --skip-existing
 
 clean:
 	@rm -rf dist *.egg-info build
