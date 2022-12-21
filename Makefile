@@ -9,10 +9,14 @@ check: build
 push: check
 	@twine upload -r testpypi dist/* --verbose --skip-existing
 
+clean:
+	@rm -rf dist *.egg-info build
+
 run:
 	@python main.py
 
 test:
 	@black .
+	@bandit -r certgenerator/
 	@pytest
 	@flake8 . --exclude venv,main.py
