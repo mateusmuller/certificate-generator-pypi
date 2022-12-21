@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name="certgenerator",
     packages=find_packages(),
-    version="0.0.1",
+    version="0.0.0",
     description=" Python Client to generate certificates of completion.",
     long_description_content_type="text/markdown",
     long_description=long_description,
