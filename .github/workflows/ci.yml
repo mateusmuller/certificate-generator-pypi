@@ -42,7 +42,8 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Build Python package
         run: |
-          sed -i 's/0.0.0/${GITHUB_REF_NAME}/g' setup.py
+          echo ${GITHUB_REF_NAME}
+          sed -i "s/0\.0\.0/${GITHUB_REF_NAME}/g" setup.py
           make build
       - uses: actions/upload-artifact@v3
         with:
@@ -73,4 +74,5 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
       run: |
+        ls -l
         make push
