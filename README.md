@@ -17,7 +17,7 @@ Certificates will then be generated and sent to students.
 1. Install the library.
 
 ```
-$ pip install certgenerator
+$ pip install ccgenerator
 ```
 
 2. Declare environment variables for SMTP authentication.
@@ -32,17 +32,17 @@ $ export SMTP_PORT=<port>
 3. Code.
 
 ```
-import certgenerator
+import ccgenerator
 
 
 if __name__ == '__main__':
-    c = certgenerator.CertificateGenerator('<email subject>',
-                                           '<spreadsheet>.csv',
-                                           '<certificate template>.png',
-                                           <x position of the name>,
-                                           <y position of the name>,
-                                           '<font name>.ttf',
-                                           <font size>)
+    c = ccgenerator.CertificateGenerator('<email subject>',
+                                         '<spreadsheet>.csv',
+                                         '<certificate template>.png',
+                                         <x position of the name>,
+                                         <y position of the name>,
+                                         '<font name>.ttf',
+                                         <font size>)
     c.run()
 ```
 
@@ -53,12 +53,12 @@ import certgenerator
 
 
 if __name__ == '__main__':
-    c = certgenerator.CertificateGenerator('[WORKSHOP FEEVALE] - Certificado de Conclusão',
-                                           'participantes.csv',
-                                           'certificate.png',
-                                           640,
-                                           1000,
-                                           'DejaVuSans.ttf',
-                                           200)
+    c = ccgenerator.CertificateGenerator('[WORKSHOP FEEVALE] - Certificado de Conclusão',
+                                         'participantes.csv',
+                                         'certificate.png',
+                                         640,
+                                         1000,
+                                         'DejaVuSans.ttf',
+                                         200)
     c.run()
 ```
