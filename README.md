@@ -49,7 +49,7 @@ if __name__ == '__main__':
 ## Example
 
 ```
-import certgenerator
+import ccgenerator
 
 
 if __name__ == '__main__':
