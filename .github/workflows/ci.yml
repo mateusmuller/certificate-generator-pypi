@@ -69,6 +69,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build
+        path: dist
     - name: Build and push
       env:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
