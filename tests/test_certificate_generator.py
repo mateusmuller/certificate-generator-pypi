@@ -8,10 +8,10 @@ from PIL import Image
 class TestCertificateGenerator:
     @pytest.fixture()
     def client(self):
-        os.environ["SMTP_EMAIL"] = "demo@demo.com"
-        os.environ["SMTP_PASSWORD"] = "pass"
-        os.environ["SMTP_SERVER"] = "smtp.demo.com"
-        os.environ["SMTP_PORT"] = "589"
+        os.environ["SMTP_EMAIL"] = ""
+        os.environ["SMTP_PASSWORD"] = ""
+        os.environ["SMTP_SERVER"] = ""
+        os.environ["SMTP_PORT"] = ""
 
         yield certgenerator.CertificateGenerator(
             "[WORKSHOP FEEVALE] - Certificado de Conclusão",
