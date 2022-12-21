@@ -3,7 +3,7 @@
 build:
 	@python setup.py sdist bdist_wheel
 
-check: build
+check:
 	@twine check dist/*
 
 push: check
