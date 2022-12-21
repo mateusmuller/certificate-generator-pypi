@@ -4,10 +4,10 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="certgenerator",
+    name="ccgenerator",
     packages=find_packages(),
     version="0.0.0",
-    description=" Python Client to generate certificates of completion.",
+    description="Python Client to generate certificates of completion.",
     long_description_content_type="text/markdown",
     long_description=long_description,
     author="Mateus Muller",
