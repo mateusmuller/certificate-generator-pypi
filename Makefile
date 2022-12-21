@@ -17,6 +17,7 @@ run:
 
 test:
 	@black .
-	@bandit -r certgenerator/
+	@bandit -r tests -s B101
+	@bandit -r certgenerator
 	@pytest
 	@flake8 . --exclude venv,main.py
